@@ -1,0 +1,43 @@
+<div class="container">
+    
+  <div class="row col-6 m-auto mt-5 border border-secondary rounded-2">
+    {{#if err}}
+    <div class="alert alert-danger" role="alert">
+      {{err}}
+    </div>
+    {{/if}}
+    <h2 class="text-center p-2 bg-success text-white">Đăng nhập</h2>
+    <form method="post">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          value="{{user.username}}"
+          required
+        />
+
+      </div>
+      <div class="mb-3">
+        <label for="pass" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="pass"
+          name="pass"
+          value="{{user.password}}"
+
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-success col-12 fs-5">Đăng nhập</button>
+    </form>
+
+    <p class="text-center">Bạn chưa có tải khoản?
+      <a class="text-warning text-decoration-none fw-semibold" href="/api/signup">
+        Đăng ký</a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+<table
+  class="table table-bordered border-dark table-striped table-hover align-middle mt-4"
+>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">ISBN</th>
+      <th scope="col">Title</th>
+      <th scope="col">Author</th>
+      <th scope="col">Publisher</th>
+      {{!-- <th scope="col"></th> --}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#each listBook}}
+      <tr>
+        <th scope="row">{{sum @index 1}}</th>
+        <td class="tensp">{{this.isbn}}</td>
+        <td>{{this.title}}</td>
+        <td>{{this.author}}</td>
+        <td>{{this.publisher}}</td>
+        {{!-- <td>
+          <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#update-sp">
+            Sửa
+          </a>
+
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-id="{{this._id}}"
+            data-bs-target="#delete-sp"
+          >Xóa</button>
+        </td> --}}
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<button
+  type="button"
+  class="btn btn-primary float-end my-3"
+  data-bs-toggle="modal"
+  data-bs-target="#exampleModal1"
+>
+  Thêm sách
+</button>
+
+<div
+  class="modal fade"
+  id="exampleModal1"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Thêm sách</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          <div class="mb-3">
+            <label for="isbn" class="form-label">ISBN</label>
+            <input type="text" class="form-control" id="isbn" name="isbn" required/>
+          </div>
+          <div class="mb-3">
+            <label for="title" class="form-label">Giá sản phẩm</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              name="title"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="author" class="form-label">Số lượng</label>
+            <input
+              
+              type="text"
+              class="form-control"
+              id="author"
+              name="author"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="publisher" class="form-label">Loại sản phẩm</label>
+            <input type="text" class="form-control" id="publisher" name="publisher" />
+          </div>
+
+          <div class="modal-footer">
+
+            <button
+              type="button"
+              class="btn btn-secondary col-3"
+              data-bs-dismiss="modal"
+            >Hủy</button>
+            <button type="submit" class="btn btn-primary col-4">Thêm</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
