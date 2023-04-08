@@ -6,6 +6,7 @@ var jwt = require('jsonwebtoken');
 var router = express.Router();
 var User = require("../models/user");
 var Book = require("../models/book");
+const request = require('request');
 
 const bodyParser = require("body-parser");
 const { checkAccount, checkLogin } = require('../middleware/auth');
@@ -55,7 +56,11 @@ router.post('/login', async function (req, res) {
                 // if user is found and password is right create a token
                 var token = jwt.sign(user.toJSON(), config.secret);
                 // return the information including token as JSON
-                res.json({ success: true, token: 'JWT ' + token });
+                request.get('http://localhost:8080/api/book', {
+                    headers: { 'Authorization': 'JWT ' + token }
+                }, function (error, response, body) {
+                    res.send(body);
+                });
             } else {
                 res.status(401).send({ success: false, msg: 'Authentication failed. Wrong password.' });
             }
@@ -67,22 +72,14 @@ router.get('/book', passport.authenticate('jwt', { session: false }), async func
     console.log(req.headers);
     var token = getToken(req.headers);
     if (token) {
-        jwt.verify(token, config.secret, async function (err, decoded) {
-            if (err) {
-                console.error(err);
-                return res.status(403).send({ success: false, msg: 'Unauthorized.' });
-            } else {
-                let books = await Book.find();
-                console.log(token);
-                res.render("listBook", { listBook: books.map((book) => book.toObject()) });
-            }
+        let books = await Book.find({}).lean().exec();
+    
+        return res.render("listBook", {
+          books,
         });
-        // let books = await Book.find();
-        // console.log(token);
-        // res.render("listBook", { listBook: books.map((book) => book.toObject()) });
-    } else {
-        return res.status(403).send({ success: false, msg: 'Unauthorized.' });
-    }
+      } else {
+        return res.redirect("/api/login");
+      }
 });
 
 router.post('/book', passport.authenticate('jwt', { session: false }), function (req, res) {
